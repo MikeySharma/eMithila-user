@@ -1,0 +1,1 @@
+export const base_url = 'https://emithila-backend.onrender.com/api/';
