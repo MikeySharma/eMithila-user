@@ -10,7 +10,7 @@ const ForgotPassword = () => {
       <BreadCrumb title="Forgot Password"/>
       <Container class1="forgot-password-wrapper set-bg py-28">
         <div className=" flex items-center justify-center">
-          <div className="forgot-password-container w-fit rounded-md p-4 bg-white box-shadow-dim">
+          <div className="forgot-password-container rounded-md p-4 bg-white box-shadow-dim">
           <h3 className="text-xl font-medium text-center my-2">Reset Your Password</h3>
           <h5 className="text-sm font-medium text-center mb-3">We will send you an email to reset your password</h5>
             <form className="form-box flex justify-center gap-4 flex-col mt-8" action="">

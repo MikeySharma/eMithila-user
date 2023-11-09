@@ -22,8 +22,8 @@ const Blog = () => {
             <Container class1="blog-page py-5">
 
                     <div className="grid grid-cols-12 gap-4">
-                        <div className="col-span-3">
-                            <div className="filter-card bg-white rounded-md box-shadow-dim mb-4 p-3">
+                        <div className="filter-card col-span-3">
+                            <div className=" bg-white rounded-md box-shadow-dim mb-4 p-3">
                                 <h5 className="filter-title text-xl font-medium mb-4" >Shop By Categories</h5>
                                 <ul>
                                     <li className="text-md font-normal mb-2">Home</li>

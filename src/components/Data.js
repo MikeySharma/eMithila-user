@@ -38,7 +38,7 @@ export const Services = [
 
     },
     {
-        "title": "Daily Surprise Offers",
+        "title": "Daily Offers",
         "tagline": "Save upto 25% off",
         "image": giftIcon,
     },

@@ -23,7 +23,7 @@ const Wishlist = () => {
       <BreadCrumb title="Wishlist" />
       <Container class1="wishlist-product-wrapper set-bg py-5">
         <div className="grid grid-cols-12 gap-4">
-        {wishlistState?.length !== 0 || wishlistState !== undefined ? wishlistState?.map((elem)=>{
+        {wishlistState?.length !== 0  ? wishlistState?.map((elem)=>{
           return (
             <div key={elem._id} className="wishlist-product flex items-center justify-center flex-col col-span-2">
             <div className="wishlist-product-img relative h-28 w-full flex items-center justify-center overflow-hidden rounded-md">

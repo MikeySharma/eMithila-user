@@ -35,8 +35,8 @@ const SingleBlog = () => {
                 <BreadCrumb title={title ? title : ''}/>
                 <Container class1="single-blog-page py-5">
 
-                        <div className="grid grid-cols-12 gap-4">
-                            <div className="col-span-3">
+                        <div className=" grid grid-cols-12 gap-4">
+                            <div className="blog-filter col-span-3">
                                 <div className="filter-card bg-white rounded-md box-shadow-dim mb-4 p-3">
                                     <h5 className="filter-title text-xl font-medium mb-4" >Shop By Categories</h5>
                                     <ul>

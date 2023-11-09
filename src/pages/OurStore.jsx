@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import BreadCrumb from '../components/BreadCrumb';
 import Meta from '../components/Meta';
 import ReactStars from "react-rating-stars-component";
@@ -10,6 +10,8 @@ import ProductCard from '../components/ProductCard';
 import Container from '../components/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../features/products/productSlice';
+import { getColors } from '../features/auth/authSlice';
+import {Link} from 'react-router-dom';
 
 const OurStore = () => {
   const [grid, setGrid] = useState(3);
@@ -40,9 +42,11 @@ const OurStore = () => {
   }
   useEffect(() => {
     dispatch(getProducts({ limit, page }));
+    dispatch(getColors())
   }, [])
 
-  const productState = useSelector((state) => state.product);
+  const productState = useSelector((state) => state?.product);
+  const colors = useSelector(state => state?.auth?.colors);
   const { products } = productState;
 
   const fetchMoreData = () => {
@@ -102,19 +106,8 @@ const OurStore = () => {
                 <h3 className="text-md font-bold my-3">Color</h3>
                 <div className="color-filter">
                   <ul className="flex items-center gap-3 flex-wrap">
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
-                    <li className="rounded-full list-none h-4 w-4 bg-red-500 cursor-pointer"></li>
+                    {colors !== undefined && colors?.map((item) => <button key={item?._id} style={{ "background": `${item?.title}` }} className='h-4 w-4 rounded-full border-2 border-gray-400'></button>
+                    )}
                   </ul>
                 </div>
 
@@ -162,53 +155,38 @@ const OurStore = () => {
             <div className="filter-card bg-white rounded-md box-shadow-dim  p-2">
               <h5 className="filter-title text-xl font-medium mb-1" >Random Products</h5>
               <div className="random-products">
-                <div className="random-product-1 flex items-center gap-5 border-b-2 py-2 rounded-md">
-                  <div className="random-product-img rounded-md overflow-hidden">
-                    <img className="h-32 w-48" src="https://images.pexels.com/photos/3766111/pexels-photo-3766111.jpeg?cs=srgb&dl=pexels-alex-azabache-3766111.jpg&fm=jpg" alt="random prouct imaages" />
-                  </div>
-                  <div className="random-product-content">
-                    <h4 className='text-md font-medium'>Kids Headphones Bulk 10 Pack Multi Colored For...</h4>
-                    <ReactStars
-                      count={5}
-                      value={3}
-                      size={22}
-                      isHalf={true}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                    <h5 className="random-product-price text-md font-normal">
-                      $100.00
-                    </h5>
-                  </div>
+                {products && products?.slice(10, 12)?.map((elem) => {
+                  return (<div key={elem?._id} className="random-product-1 flex items-center gap-5 border-b-2 py-2 rounded-md">
+                    <div className="random-product-img rounded-md overflow-hidden">
+                      <img className="h-32 w-48" src={elem?.images[0]?.url} alt="random prouct imaages" />
+                    </div>
+                    <Link to={`/product/${elem?._id}`}>
+                      <div className="random-product-content">
+                        <h4 className='text-md font-medium'>{elem?.title?.length >= 40 ? elem?.title?.substring(0, 30) + '...' : elem?.title}</h4>
+                        <ReactStars
+                          count={5}
+                          value={elem?.rating && elem?.rating}
+                          size={22}
+                          isHalf={true}
+                          edit={false}
+                          activeColor="#ffd700"
+                        />
+                        <h5 className="random-product-price text-md font-normal">
+                          {elem?.price}
+                        </h5>
+                      </div>
+                    </Link>
 
-                </div>
-                <div className="random-product-2 flex items-center gap-5 py-2 rounded-md">
-                  <div className="random-product-img rounded-md overflow-hidden">
-                    <img className="h-32 w-48" src="https://images.pexels.com/photos/3766111/pexels-photo-3766111.jpeg?cs=srgb&dl=pexels-alex-azabache-3766111.jpg&fm=jpg" alt="random prouct imaages" />
-                  </div>
-                  <div className="random-product-content">
-                    <h4 className='text-md font-medium'>Kids Headphones Bulk 10 Pack Multi Colored For...</h4>
-                    <ReactStars
-                      count={5}
-                      value={3}
-                      size={22}
-                      isHalf={true}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                    <h5 className="random-product-price text-md font-normal">
-                      $100.00
-                    </h5>
-                  </div>
+                  </div>)
+                })}
 
-                </div>
               </div>
             </div>
           </div>
-          <div className="col-span-9">
+          <div className="col-span-9 our-store-res">
             <div className="grid-filter-sort box-shadow-dim rounded-sm bg-white p-3">
               <div className="flex items-center justify-between">
-                <div className="sort-by flex items-center gap-3">
+                <div className="sort-by flex items-center gap-2">
                   <p className="text-md font-medium">Sort By : </p>
                   <select name="" id="" className="form-control p-2 rounded-sm">
                     <option value="manual">Featured</option>

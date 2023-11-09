@@ -9,8 +9,8 @@ import mailerLogo from '../assets/comment-email-mail-message-post-send-svgrepo-c
 const Footer = () => {
   return (
     <>
-      <footer className="py-3">
-        <div className="container-xxl">
+      <footer className="container mx-auto p-3">
+        <div className="footer-email container">
           <div className="flex items-center justify-around p-4">
             <div className=" flex gap-5 items-center text-white text-md capitalize"><img src={mailerLogo} className='h-9' alt="mailer Logo" /> Sign up for newsletter</div>
             <div className="bg-white rounded-md py-1 px-2">
@@ -20,9 +20,8 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <footer className="py-3">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-12 gap-4">
+      <footer className="container mx-auto p-3">
+          <div className="about-container grid grid-cols-12 gap-4">
             <div className=" col-span-4">
               <h4 className="text-white text-xl mb-4">Contact Us</h4>
               <div className="footer-links flex flex-col">
@@ -37,7 +36,6 @@ const Footer = () => {
                   <a href="instagram.com" className="bg-gray-600 p-1  rounded-full"><img src={instagramLogo} className='h-8 p-1' alt="instagram Logo" /></a>
                   <a href="youtube.com" className="bg-gray-600 p-1  rounded-full"><img src={youtubeLogo} className='h-8 p-1' alt="youtube Logo" /></a>
                 </div>
-              </div>
             </div>
             <div className=" col-span-3">
               <h4 className="text-white text-xl mb-4">Information</h4>
@@ -71,12 +69,10 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <footer className="py-3">
-        <div className="container-xxl">
+      <footer className=" container mx-auto p-3">
           <div className="flex justify-center items-center mb-0 text-white">
             <p>&copy; {new Date().getFullYear()}: Powered By Mithila Youths</p>
           </div>
-        </div>
       </footer>
     </>
   )

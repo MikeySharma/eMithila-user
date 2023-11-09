@@ -22,15 +22,15 @@ const Home = () => {
     dispatch(getBlogs());
   }, [])
 
-  const blogs = useSelector((state) => state.blog.blogs);
-  const products = useSelector((state) => state.product.products);
+  const blogs = useSelector((state) => state?.blog?.blogs);
+  const products = useSelector((state) => state?.product?.products);
 
 
   return (
     <>
-      <Meta title={"Home"} />
-      <Container class1="home-wrapper-1 py-5">
-        <div className="banner grid grid-cols-12 gap-12">
+      <Meta title="Home" />
+      <Container class1="home-wrapper-1 py-2">
+        <div className="banner grid grid-cols-12 gap-2">
           <div className="slide-container col-span-6 rounded-md overflow-hidden">
             <Slide>
               {slideImages.map((slideImage, index) => (
@@ -42,9 +42,9 @@ const Home = () => {
               ))}
             </Slide>
           </div>
-          <div className=" col-span-6 flex flex-wrap gap-2 justify-around items-center">
+          <div className=" small-banners col-span-6 flex flex-wrap gap-2 justify-around items-center">
             {products && products?.filter((elem) => elem?.tags === 'special')?.slice(0, 4)?.map((elem) => {
-              return (<div className="small-banner relative rounded-md overflow-hidden">
+              return (<div key={elem?._id} className="small-banner relative rounded-md overflow-hidden">
                 <img src={elem?.images[0]?.url} className='w-72 h-48 ' alt="small-banner" />
                 <div className="small-banner-content absolute">
                   <h4 className="text-xl mb-3">{elem?.brand}</h4>
@@ -60,13 +60,13 @@ const Home = () => {
         </div >
       </Container>
 
-      <Container class1="home-wrapper-2 py-5">
+      <Container class1="home-wrapper-2 py-5 ">
         <div className="grid grid-cols-12">
-          <div className="col-span-12">
+          <div className="col-span-12 overflow-hidden">
             <div className="services flex items-center justify-between">
               {Services.map((service, index) => {
                 return (
-                  <div key={index} className="flex items-center gap-4" >
+                  <div key={index} className="flex items-center gap-2" >
                     <img src={service.image} alt="shipping Icon" className="h-9" />
                     <div>
                       <h5 className="text-md font-bold" >{service.title}</h5>
@@ -85,7 +85,7 @@ const Home = () => {
       </Container >
 
       <Container class1="home-wrapper-2 py-5">
-        <div className=" bg-white border-b-2  border-gray-300 grid grid-cols-12">
+        <div className=" bg-white border-b-2 overflow-hidden border-gray-300 grid grid-cols-12">
           <div className="col-span-12">
             <div className="categories flex items-center justify-between ">
               {products && products?.slice(0, 5)?.map((elem) => {
@@ -131,10 +131,10 @@ const Home = () => {
 
       <Container class1="special-product-wrapper py-5">
         <h4 className="mb-5 text-2xl font-medium px-5">Our Special Products</h4>
-        <div className="grid grid-cols-12 gap-3 container mx-auto">
+        <div className="grid grid-cols-12 gap-3 ">
           {
             products && products?.filter((elem) => elem.tags === "special")?.slice(0, 3)?.map((elem) => {
-              return <SpecialProductCard key={elem?._id} id={elem._id} title={elem?.title} rating={elem?.totalrating} brand={elem?.brand} price={elem?.price} quantity={elem?.quantity} images={elem?.images} />
+              return <SpecialProductCard key={elem?._id} id={elem._id}  title={elem?.title} rating={elem?.totalrating} brand={elem?.brand} price={elem?.price} quantity={elem?.quantity} images={elem?.images} />
             })
           }
         </div>
@@ -142,7 +142,7 @@ const Home = () => {
 
       <Container class1="popular-product-wrapper py-5">
         <h4 className=" bg-white mb-5 text-2xl font-medium p-5 box-shadow-dim">Our Popular Products</h4>
-        <div className="product-category-wrapper grid grid-cols-12 gap-5 container mx-auto">
+        <div className="product-category-wrapper grid grid-cols-12 gap-5 ">
           <div className="col-span-2 box-shadow-dim rounded-md overflow-hidden">
             <div className="popular-product-items  h-full bg-white rounded-sm flex items-start flex-col">
               <div className="product-1 flex items-center gap-3 px-2 py-4 ">
@@ -165,17 +165,17 @@ const Home = () => {
             </div>
           </div>
           {products && products?.filter((elem) => elem.tags === "popular")?.slice(0, 4)?.map((elem) => {
-            return <ProductCard key={elem._id} id={elem._id} title={elem.title} brand={elem.brand} description={elem.description} price={elem.price} images={elem.images} rating={elem.totalrating} />
+            return <ProductCard key={elem._id} id={elem._id} title={elem.title} brand={elem.brand} description={elem.description} price={elem.price} color={elem?.color} images={elem.images} rating={elem.totalrating} />
           })
           }
 
         </div>
       </Container>
-      <Container class1="featured-wrapper py-5">
-        <h4 className=" bg-white mb-5 text-2xl font-medium p-5 box-shadow-dim">Featured Collection</h4>
-        <div className="blog-wrapper grid grid-cols-12 gap-5 overflow-y-hidden">
+      <Container class1="featured-wrapper  py-5">
+        <h4 className=" bg-white  mb-5 text-2xl font-medium p-5 box-shadow-dim">Featured Collection</h4>
+        <div className="blog-wrapper  grid grid-cols-12 gap-5 overflow-y-hidden">
           {products && products?.filter((elem) => elem.tags === "featured")?.slice(0, 6)?.map((elem) => {
-            return <ProductCard key={elem._id} id={elem._id} title={elem.title} brand={elem.brand} description={elem.description} price={elem.price} images={elem.images} rating={elem.totalrating} />
+            return <ProductCard key={elem._id} id={elem._id} title={elem.title} brand={elem.brand} description={elem.description} color={elem?.color} price={elem.price} images={elem.images} rating={elem.totalrating} />
           })
           }
 
@@ -183,7 +183,7 @@ const Home = () => {
       </Container>
 
       <Container class1="special-product-card-wrapper py-5">
-        <div className="grid grid-cols-12 gap-12">
+        <div className="grid grid-cols-12 gap-2">
           {products && products?.slice(3, 7)?.map((elem) => {
             return <FeatureProductCard key={elem._id} title={elem.title} images={elem.images} brand={elem.brand} description={elem.description} />
           })
@@ -193,7 +193,7 @@ const Home = () => {
 
       <Container class1="blog-wrapper py-5">
         <h4 className=" bg-white mb-5 text-2xl font-medium p-5 box-shadow-dim">Our Latest Blogs</h4>
-        <div className="blog-wrapper grid grid-cols-12 gap-12 ">
+        <div className="blog-wrapper grid grid-cols-12 gap-2 ">
           {blogs && blogs.slice(0, 4).map((elem) => {
             return <BlogCard key={elem._id} id={elem._id} title={elem.title} desc={elem.description} date={elem.createdAt} img={elem.images} />
           })}

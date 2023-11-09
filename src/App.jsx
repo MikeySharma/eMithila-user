@@ -1,5 +1,6 @@
 import React from 'react';
 import "./App.css";
+import "./mobile.css";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from "./components/Layout";
 import Contact from "./pages/Contact";

@@ -11,7 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUserCart } from '../features/auth/authSlice';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
-
+import { slide as Menu } from 'react-burger-menu';
+import Container from './Container';
+import CustomModal from './CustomModel';
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,6 +21,14 @@ const Header = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [selectOpt, setSelectOpt] = useState([]);
   const [paginate, setPaginate] = useState(true);
+   const [open, setOpen] = useState(false);
+    const hideModal = () => {
+    setOpen(false);
+     };
+  const performAction = ()=>{
+    setOpen(false);
+     handleLogout()
+  }
 
   const dropdownMenuToggler = () => {
     const dropdown = document.getElementById('dropdown');
@@ -63,8 +73,8 @@ const Header = () => {
   }
   return (
     <>
-      <header className="header-top-strip py-1">
-        <div className="container mx-auto">
+      <div className="container mx-auto">
+        <header className="header-top-strip py-1 px-2">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white mb-0">Free Shipping Over $100 & Free Returns</p>
@@ -73,15 +83,16 @@ const Header = () => {
               <p className="text-white mb-0">Hotline: <a className="text-white" href="+977 9825850687">+977-9825850687</a></p>
             </div>
           </div>
-        </div>
-      </header>
-      <header className="header-upper py-3">
-        <div className="container mx-auto">
+        </header>
+      </div>
+
+      <div className="container  mx-auto">
+        <header className="header-upper p-2">
           <div className="flex items-center justify-between h-10">
             <div>
               <h3><Link to="/" className="text-white text-3xl">eMithila</Link></h3>
             </div>
-            <div style={{ "width": "30rem" }}>
+            <div className="header-search-bar" style={{ "width": "30rem" }}>
               <div className="flex rounded-md z-10">
                 <Typeahead
                   id="basic-behaviors-example"
@@ -89,7 +100,7 @@ const Header = () => {
                   options={selectOpt}
                   onPaginate={() => console.log('Results paginate')}
                   paginate={paginate}
-                  minLength={2}
+                  minLength={1}
                   onChange={(e) => { e[0]?.id !== undefined ? navigate(`/product/${e[0]?.id}`) : '' }}
                   placeholder="Search for Products"
                 />
@@ -99,7 +110,7 @@ const Header = () => {
               </div>
             </div>
             <div>
-              <div className="header-upper-links flex items-center content-center gap-4">
+              <div className="header-upper-links flex items-center content-center gap-2">
                 <div>
                   <Link to="/compare-product" className="flex items-center gap-2" >
                     <img src={compare} alt="compare icon" className="h-8" />
@@ -121,7 +132,7 @@ const Header = () => {
                         <img src={user} alt="user icon" className="h-8" />
                         <p className="text-white text-md flex flex-col leading-5" ><span>Login</span><span>My Account</span></p>
                       </Link>) :
-                      (<button onClick={() => handleLogout()} className="flex items-center gap-2" >
+                      (<button onClick={() => setOpen(true)} className="flex items-center gap-2" >
                         <img src={user} alt="user icon" className="h-8" />
                         <p className="text-white text-md flex flex-col leading-5" ><span>Logout</span><span>{customerInfo?.firstname !== undefined && customerInfo?.firstname}</span></p>
                       </button>)
@@ -136,42 +147,67 @@ const Header = () => {
 
                 </div>
               </div>
+             
             </div>
-          </div>
-        </div>
+            <div className="hamburger-menu hidden">
+              <div className="flex items-center gap-9">
+            {
+                    (customerInfo === null || customerInfo === undefined) ?
+                      (<Link to="/login" className="flex items-center gap-1" >
+                        <img src={user} alt="user icon" className="h-8" />
+                        <p className="text-white text-md flex flex-col leading-5" ><span>Login</span><span>My Account</span></p>
+                      </Link>) :
+                      (<button onClick={() =>setOpen(true)} className="flex items-center gap-1" >
+                        <img src={user} alt="user icon" className="h-8" />
+                        <p className="text-white text-md flex flex-col leading-5" ><span>Logout</span><span>{customerInfo?.firstname !== undefined && customerInfo?.firstname}</span></p>
+                      </button>)
+                  }
+            <Menu right>
+             <Typeahead
+                  id="basic-behaviors-example"
+                  labelKey="name"
+                  options={selectOpt}
+                  onPaginate={() => console.log('Results paginate')}
+                  paginate={paginate}
+                  minLength={1}
+                  onChange={(e) => { e[0]?.id !== undefined ? navigate(`/product/${e[0]?.id}`) : '' }}
+                  placeholder="Search for Products"
+                />
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/product">our Store</NavLink>
+            <NavLink to="/blog">Blog</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
+            <Link to="/compare-product">Compare Products</Link>
+            <Link to="/wishlist" >Favourite Wishlist</Link>
+            <Link to="/cart">Go To Cart</Link>
+              </Menu>
+              </div>
+            </div>
+           
 
-      </header>
+          </div>
 
 
-      <header className="header-bottom py-1">
-        <div className="container mx-auto flex items-center relative justify-start gap-4">
-          <div className="text-white   focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm  py-1 text-center flex flex-col" name="dropdown-menu" onClick={dropdownMenuToggler} >
-            <label className='text-white text-md font-medium uppercase flex items-center gap-4 cursor-pointer' htmlFor="dropdown-menu"><img src={categoriesMenu} alt="categories Menu" className="h-6" />Shop Categories <img src={downArrow} alt=" down Arrow Icon" className="h-7" /></label>
-          </div>
-          <div id="dropdown" className="z-1 hidden absolute top-full bg-white divide-y divide-gray-100 rounded-lg shadow w-56 dark:bg-gray-700">
-            <ul className="py-1 text-md text-center capitalize  dark:text-gray-200" aria-labelledby="dropdown-menu">
-              <li>
-                <Link className="block px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">tables</Link>
-              </li>
-              <li>
-                <Link className="block px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">chairs</Link>
-              </li>
-              <li>
-                <Link className="block px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">bed</Link>
-              </li>
-              <li>
-                <Link className="block px-4 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">window</Link>
-              </li>
-            </ul>
-          </div>
+
+        </header>
+      </div>
+
+      <div className="container mx-auto ">
+
+        <header className="header-bottom py-1 px-2 flex items-center relative justify-start gap-4">
+
+
           <div className="menu-link text-white text-md font-normal flex items-center gap-4 uppercase">
             <NavLink to="/">Home</NavLink>
             <NavLink to="/product">our Store</NavLink>
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/contact">Contact</NavLink>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
+    <CustomModal open={open} performAction={performAction}  hideModal={hideModal} title={"Do you really want to Logout Your Account"}/>
+
+
     </>
   )
 }

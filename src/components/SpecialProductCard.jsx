@@ -31,7 +31,7 @@ const SpecialProductCard = (props) => {
                         <span className="red-p text-orange-700" >{price}</span>
                          {/*&nbsp; <strike>$200</strike>*/}
                     </p>
-                    <div className="discount-till flex items-center gap-4">
+                    {/* <div className="discount-till flex items-center gap-4">
                         <p className="mb-3">
 
                             <span className="py-2 font-normal">
@@ -44,12 +44,12 @@ const SpecialProductCard = (props) => {
                             <span className="bg-red-500 p-1.5 text-sm font-medium text-white rounded-full">23</span>
                         </div>
 
-                    </div>
+                    </div> */}
                     <div className="progress-bar">
                         <p>Products : {quantity}</p>
 
                         <div className="w-full mt-2 bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
-                            <div className="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style={{ width: "45%" }}></div>
+                            <div className="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style={{ width: `${quantity  <= 100 ? quantity: '0'}%` }}></div>
                         </div>
                     </div>
                     <Link to={`product/${id}`} className="bg-slate-800  text-white font-bold py-2 px-3 rounded-full hover:bg-orange-500 dark:hover:bg-orange-600">Read More</Link>

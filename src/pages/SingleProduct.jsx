@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import Meta from '../components/Meta'
 import BreadCrumb from '../components/BreadCrumb'
 import { Link } from 'react-router-dom';
@@ -9,35 +9,35 @@ import ReactStars from "react-rating-stars-component";
 import CompareIcon from '../assets/code-compare.svg';
 import wishlistIcon from '../assets/black-heart.svg';
 import Container from '../components/Container';
-import {copyToClipboard} from '../components/Data';
-import {useDispatch, useSelector} from 'react-redux';
-import {useLocation} from 'react-router-dom';
-import {getAProduct, addToWishList, rating, getProducts} from '../features/products/productSlice';
+import { copyToClipboard } from '../components/Data';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { getAProduct, addToWishList, rating, getProducts, addToCompare } from '../features/products/productSlice';
 import parse from 'html-react-parser';
 import * as yup from 'yup';
-import {useFormik} from 'formik';
-import {toast} from 'react-toastify';
-import {addToCart, resetState} from '../features/auth/authSlice';
+import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
+import { addToCart } from '../features/auth/authSlice';
 
 const SingleProduct = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const productId = location.pathname.split('/')[2];
-  const [rate, setRate] = useState();
-  const [cartColor, setCartColor] = useState();
-  const [cartQuantitiy, setCartQuantity] = useState(1);
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const productId = location.pathname.split('/')[2];
+    const [rate, setRate] = useState();
+    const [cartColor, setCartColor] = useState();
+    const [cartQuantitiy, setCartQuantity] = useState(1);
 
-  useEffect(()=>{
-    if(productId !== undefined){
-        dispatch(getAProduct(productId));
-        dispatch(getProducts());
-    }
-  },[productId])
+    useEffect(() => {
+        if (productId !== undefined) {
+            dispatch(getAProduct(productId));
+            dispatch(getProducts());
+        }
+    }, [productId])
 
 
-  const getProductState = useSelector((state) => state.product.getProduct);
-  const {title, brand, category, color, images, price, quantity, totalrating, description, tags, ratings } = getProductState;
-  const products= useSelector((state)=> state.product.products);
+    const getProductState = useSelector((state) => state?.product?.getProduct);
+    const { title, brand, category, color, images, price, quantity, totalrating, description, tags, ratings } = getProductState;
+    const products = useSelector((state) => state?.product?.products);
 
     const rateSchema = yup.object({
         rating: yup.number().required('Rate the product'),
@@ -45,30 +45,30 @@ const SingleProduct = () => {
 
     })
 
-    const formik=useFormik({
+    const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
             rating: rate,
             comment: '',
-        }, 
+        },
         validationSchema: rateSchema,
-        onSubmit: value =>{
-            dispatch(rating({star: value.rating, comment: value.comment, productId: productId}));
+        onSubmit: value => {
+            dispatch(rating({ star: value.rating, comment: value.comment, productId: productId }));
             formik.resetForm();
             dispatch(getAProduct(productId))
         }
     })
 
-    const randomNumber = Math.floor((Math.random() * products.length));
-  const handleCartSubmit=()=>{
-     if(cartColor === undefined){
-        toast.error('Color must required');
-    }else{
-        dispatch(addToCart({productId, color: cartColor, quantity: cartQuantitiy, price: price }))
+    const randomNumber = Math.floor((Math.random() * products?.length));
+    const handleCartSubmit = () => {
+        if (cartColor === undefined) {
+            toast.error('Color must required');
+        } else {
+            dispatch(addToCart({ productId, color: cartColor, quantity: cartQuantitiy, price: price }))
+        }
     }
-  }
 
-      return (
+    return (
         <>
             <Meta title={title ? title : ''} />
             <BreadCrumb title={title ? title : ''} />
@@ -79,9 +79,9 @@ const SingleProduct = () => {
                         <div className="main-product-images bg-white col-span-6">
                             <div className="main-image border-2 overflow-hidden p-1 border-gray-300 rounded-md  ">
                                 <div >
-                                {
-                                    <Magnifier className="flex items-center justify-center" src={images && images[0]?.url} height={"23.2rem"} width={"full"} />
-                                }
+                                    {
+                                        <Magnifier className="flex items-center justify-center" src={images && images[0]?.url} height={"23.2rem"} width={"full"} />
+                                    }
                                 </div>
 
                             </div>
@@ -107,14 +107,14 @@ const SingleProduct = () => {
 
                                             <div className="product-price text-sm font-medium">${price && price}</div>
                                             <div className="flex gap-4 items-center">
-                                            {totalrating !== undefined && <ReactStars
-                                            count={5}
-                                            value={totalrating}
-                                            size={24}
-                                            isHalf={true}
-                                            edit={false}
-                                            activeColor="#ffd700"
-                                        />}
+                                                {totalrating !== undefined && <ReactStars
+                                                    count={5}
+                                                    value={totalrating}
+                                                    size={24}
+                                                    isHalf={true}
+                                                    edit={false}
+                                                    activeColor="#ffd700"
+                                                />}
                                                 <p className="text-sm font-normal mb-0">({ratings?.length} reviews)</p>
 
                                             </div>
@@ -144,7 +144,7 @@ const SingleProduct = () => {
                                         </div>
                                         <div className=" flex  gap-2 text-sm font-normal flex-col py-1">
                                             <span>Color:</span>
-                                            <Color color={color} setCartColor={setCartColor}/>
+                                            <Color color={color} setCartColor={setCartColor} />
                                         </div>
                                         <div className=" flex  gap-2 flex-col text-sm font-normal py-1">
                                             <span>Size:</span>
@@ -156,20 +156,20 @@ const SingleProduct = () => {
                                         </div>
                                         <div className=" flex  gap-3 text-sm font-normal flex-row items-center py-1">
                                             <span>Quantity:</span>
-                                            <div className=" flex gap-7 items-center">
-                                                <input className="product-quantity border-2 rounded-md border-gray-200 p-1" value={cartQuantitiy} type="number" min={1} max={quantity && quantity} onChange={(e)=> setCartQuantity(e.target.value)} />
-                                                <button onClick={()=> handleCartSubmit()} className="bg-slate-800 w-fit text-center  text-white font-medium py-2 px-3 rounded-full hover:bg-orange-400 dark:hover:bg-orange-400">Add to Cart</button>
+                                            <div className="quan-btn flex gap-7 items-center">
+                                                <input className="product-quantity border-2 rounded-md border-gray-200 p-1" value={cartQuantitiy} type="number" min={1} max={quantity && quantity} onChange={(e) => setCartQuantity(e.target.value)} />
+                                                <button onClick={() => handleCartSubmit()} className="bg-slate-800 w-fit text-center  text-white font-medium py-2 px-3 rounded-full hover:bg-orange-400 dark:hover:bg-orange-400">Add to Cart</button>
                                                 <button className="bg-orange-400 w-fit text-center  text-white font-medium py-2 px-3 rounded-full hover:bg-slate-600 dark:hover:bg-slate-800">Buy It Now</button>
 
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-5">
-                                            <Link className='flex gap-2 items-center'><img className="h-6 w-6  rounded-full" src={CompareIcon} alt="compare" />
+                                            <button onClick={() => { dispatch(addToCompare(productId)); }} className='flex gap-2 items-center'><img className="h-6 w-6  rounded-full" src={CompareIcon} alt="compare" />
                                                 <span className="text-sm font-normal mb-0">
                                                     Add To Compare
                                                 </span>
-                                            </Link>
-                                            <button onClick={()=> dispatch(addToWishList(productId))} className='flex gap-2 items-center'><img className="h-5 w-5  rounded-full" src={wishlistIcon} alt="wishlist" />
+                                            </button>
+                                            <button onClick={() => dispatch(addToWishList(productId))} className='flex gap-2 items-center'><img className="h-5 w-5  rounded-full" src={wishlistIcon} alt="wishlist" />
                                                 <span className="text-sm font-normal mb-0">
                                                     Add To Wishlist
                                                 </span>
@@ -196,7 +196,7 @@ const SingleProduct = () => {
                         <h3 className="text-2xl font-medium py-5">Description</h3>
                         <div className="desc-holder  bg-white box-shadow-dim p-3 rounded-md">
                             <div className="desc text-md font-normal">{description && parse(description)}</div>
-                         </div>
+                        </div>
                     </div>
                 </section>
                 <section className="product-review py-5">
@@ -210,7 +210,7 @@ const SingleProduct = () => {
                                         {totalrating !== undefined && <ReactStars
                                             count={5}
                                             value={totalrating}
-                                            size={24}
+                                            size={20}
                                             isHalf={true}
                                             edit={false}
                                             activeColor="#ffd700"
@@ -228,7 +228,7 @@ const SingleProduct = () => {
                                         value={rate}
                                         size={24}
                                         isHalf={true}
-                                        onChange={(e)=> setRate(e)}
+                                        onChange={(e) => setRate(e)}
                                         edit={true}
                                         activeColor="#ffd700"
                                     />
@@ -247,11 +247,11 @@ const SingleProduct = () => {
                     <div className="container mx-auto">
                         <h4 className="text-2xl font-medium py-5">You May Also Like</h4>
                         <div className="products grid grid-cols-12 gap-4">
-                       {products && products?.slice(0,randomNumber)?.map((elem)=>{
-                            return <ProductCard key={elem._id} id={elem._id} title={elem.title} rating={elem.totalrating} images={elem.images} price={elem.price} />
-                       })
+                            {products && products?.slice(4, 8)?.map((elem) => {
+                                return <ProductCard key={elem._id} id={elem._id} title={elem.title} rating={elem.totalrating} images={elem.images} price={elem.price} />
+                            })
 
-                        }
+                            }
                         </div>
                     </div>
                 </section>

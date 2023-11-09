@@ -90,6 +90,15 @@ const getCompareProducts = async()=>{
     }
 }
 
+const getColors = async()=>{
+    try{
+        const response = await axios.get(`${base_url}color/`);
+        return response.data;
+    }catch(error){
+        throw new Error(error);
+    }
+}
+
 
 const authService = {
     registerUser,
@@ -102,6 +111,7 @@ const authService = {
     createOrder,
     emptyCart,
     getCompareProducts,
+    getColors
 }
 
 export default authService;

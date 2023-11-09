@@ -81,6 +81,14 @@ export const getCompareProducts = createAsyncThunk('compare/get', async(thunkAPI
     }
 })
 
+export const getColors = createAsyncThunk('color/get', async(thunkAPI)=>{
+    try{
+        return authService.getColors();
+    }catch(error){
+        return thunkAPI.rejectWithValue(error);
+    }
+})
+
 export const resetState = createAction('Reset_all');
 
 
@@ -305,6 +313,24 @@ const authSlice = createSlice({
             state.compare = action.payload;
         })
         .addCase(getCompareProducts.rejected, (state,action)=>{
+            state.isLoading = false;
+            state.isError = true;
+            state.isSuccess = false;
+            state.message =  action.error;
+        })
+         .addCase(getColors.pending, (state)=>{
+            state.isLoading = true;
+            state.isError = false;
+            state.isSuccess = false;
+        })
+         .addCase(getColors.fulfilled, (state, action)=>{
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess = true;
+            state.message = 'success';
+            state.colors = action.payload;
+        })
+        .addCase(getColors.rejected, (state,action)=>{
             state.isLoading = false;
             state.isError = true;
             state.isSuccess = false;

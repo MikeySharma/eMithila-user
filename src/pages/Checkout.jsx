@@ -213,7 +213,7 @@ const Checkout = () => {
                 <button type="submit" className="bg-red-600 w-fit text-center text-sm text-white font-medium py-2 px-3 rounded-sm hover:bg-red-700 dark:hover:bg-red-800">Cash On Delivery</button>
 
               </div>
-              <p className="text-sm font-normal">
+              <p className="text-sm text-center font-normal">
                 All rights reserved eMithila
               </p>
 
