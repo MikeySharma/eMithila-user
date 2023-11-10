@@ -37,7 +37,9 @@ const Footer = () => {
                   <a href="youtube.com" className="bg-gray-600 p-1  rounded-full"><img src={youtubeLogo} className='h-8 p-1' alt="youtube Logo" /></a>
                 </div>
             </div>
-            <div className=" col-span-3">
+           
+          </div>
+          <div className=" col-span-3">
               <h4 className="text-white text-xl mb-4">Information</h4>
               <div className="footer-links flex flex-col">
                 <Link to="privacy-policy" className='text-white mb-1 text-md  py-2'>Privacy Policy</Link>
@@ -66,7 +68,6 @@ const Footer = () => {
                 <Link className='text-white mb-1 text-md  py-2'>Kitchen Furniture</Link>
               </div>
             </div>
-          </div>
         </div>
       </footer>
       <footer className=" container mx-auto p-3">

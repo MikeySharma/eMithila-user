@@ -5,15 +5,13 @@ import compare from '../assets/code-compare-svgrepo-com.svg';
 import heart from '../assets/heart-alt-svgrepo-com.svg';
 import user from '../assets/user-alt-1-svgrepo-com.svg';
 import shoppingCart from '../assets/cart-shopping-svgrepo-com.svg';
-import categoriesMenu from '../assets/menu-2-svgrepo-com.svg';
-import downArrow from '../assets/down-arrow-5-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserCart } from '../features/auth/authSlice';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
 import { slide as Menu } from 'react-burger-menu';
-import Container from './Container';
 import CustomModal from './CustomModel';
+
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,19 +19,19 @@ const Header = () => {
   const [totalAmount, setTotalAmount] = useState(null);
   const [selectOpt, setSelectOpt] = useState([]);
   const [paginate, setPaginate] = useState(true);
-   const [open, setOpen] = useState(false);
-    const hideModal = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const hideModal = () => {
     setOpen(false);
-     };
-  const performAction = ()=>{
+  };
+  const performAction = () => {
     setOpen(false);
-     handleLogout()
+    handleLogout()
   }
+  const handleItemClick = () => {
+    setIsOpen(false);
+  };
 
-  const dropdownMenuToggler = () => {
-    const dropdown = document.getElementById('dropdown');
-    dropdown.classList.toggle('hidden');
-  }
   const products = useSelector((state) => state?.product?.products)
   const cartState = useSelector((state) => state?.auth?.cart);
   const [customerInfo, setCustomerInfo] = useState();
@@ -147,43 +145,43 @@ const Header = () => {
 
                 </div>
               </div>
-             
+
             </div>
             <div className="hamburger-menu hidden">
               <div className="flex items-center gap-9">
-            {
-                    (customerInfo === null || customerInfo === undefined) ?
-                      (<Link to="/login" className="flex items-center gap-1" >
-                        <img src={user} alt="user icon" className="h-8" />
-                        <p className="text-white text-md flex flex-col leading-5" ><span>Login</span><span>My Account</span></p>
-                      </Link>) :
-                      (<button onClick={() =>setOpen(true)} className="flex items-center gap-1" >
-                        <img src={user} alt="user icon" className="h-8" />
-                        <p className="text-white text-md flex flex-col leading-5" ><span>Logout</span><span>{customerInfo?.firstname !== undefined && customerInfo?.firstname}</span></p>
-                      </button>)
-                  }
-            <Menu right>
-             <Typeahead
-                  id="basic-behaviors-example"
-                  labelKey="name"
-                  options={selectOpt}
-                  onPaginate={() => console.log('Results paginate')}
-                  paginate={paginate}
-                  minLength={1}
-                  onChange={(e) => { e[0]?.id !== undefined ? navigate(`/product/${e[0]?.id}`) : '' }}
-                  placeholder="Search for Products"
-                />
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/product">our Store</NavLink>
-            <NavLink to="/blog">Blog</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-            <Link to="/compare-product">Compare Products</Link>
-            <Link to="/wishlist" >Favourite Wishlist</Link>
-            <Link to="/cart">Go To Cart</Link>
-              </Menu>
+                {
+                  (customerInfo === null || customerInfo === undefined) ?
+                    (<Link to="/login" className="flex items-center gap-1" >
+                      <img src={user} alt="user icon" className="h-8" />
+                      <p className="text-white text-md flex flex-col leading-5" ><span>Login</span><span>My Account</span></p>
+                    </Link>) :
+                    (<button onClick={() => setOpen(true)} className="flex items-center gap-1" >
+                      <img src={user} alt="user icon" className="h-8" />
+                      <p className="text-white text-md flex flex-col leading-5" ><span>Logout</span><span>{customerInfo?.firstname !== undefined && customerInfo?.firstname}</span></p>
+                    </button>)
+                }
+                <Menu isOpen={isOpen} onStateChange={(state) => setIsOpen(state.isOpen)} right>
+                  <Typeahead
+                    id="basic-behaviors-example"
+                    labelKey="name"
+                    options={selectOpt}
+                    onPaginate={() => console.log('Results paginate')}
+                    paginate={paginate}
+                    minLength={1}
+                    onChange={(e) => { e[0]?.id !== undefined ? navigate(`/product/${e[0]?.id}`) : '' }}
+                    placeholder="Search for Products"
+                  />
+                  <NavLink onClick={handleItemClick} to="/">Home</NavLink>
+                  <NavLink onClick={handleItemClick} to="/product">our Store</NavLink>
+                  <NavLink onClick={handleItemClick} to="/blog">Blog</NavLink>
+                  <NavLink onClick={handleItemClick} to="/contact">Contact</NavLink>
+                  <Link onClick={handleItemClick} to="/compare-product">Compare Products</Link>
+                  <Link onClick={handleItemClick} to="/wishlist" >Favourite Wishlist</Link>
+                  <Link onClick={handleItemClick} to="/cart">Go To Cart</Link>
+                </Menu>
               </div>
             </div>
-           
+
 
           </div>
 
@@ -205,7 +203,7 @@ const Header = () => {
           </div>
         </header>
       </div>
-    <CustomModal open={open} performAction={performAction}  hideModal={hideModal} title={"Do you really want to Logout Your Account"}/>
+      <CustomModal open={open} performAction={performAction} hideModal={hideModal} title={"Do you really want to Logout Your Account"} />
 
 
     </>

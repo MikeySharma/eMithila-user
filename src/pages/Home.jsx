@@ -23,12 +23,16 @@ const Home = () => {
   }, [])
 
   const blogs = useSelector((state) => state?.blog?.blogs);
-  const products = useSelector((state) => state?.product?.products);
-
+  const productState = useSelector((state) => state?.product);
+  const {products, isLoading} = productState;
+  console.log(products);
 
   return (
     <>
       <Meta title="Home" />
+      {isLoading && <div className="text-center py-5 text-xl font-medium">Please Wait...</div>}
+      {!isLoading && 
+      <>
       <Container class1="home-wrapper-1 py-2">
         <div className="banner grid grid-cols-12 gap-2">
           <div className="slide-container col-span-6 rounded-md overflow-hidden">
@@ -134,7 +138,7 @@ const Home = () => {
         <div className="grid grid-cols-12 gap-3 ">
           {
             products && products?.filter((elem) => elem.tags === "special")?.slice(0, 3)?.map((elem) => {
-              return <SpecialProductCard key={elem?._id} id={elem._id}  title={elem?.title} rating={elem?.totalrating} brand={elem?.brand} price={elem?.price} quantity={elem?.quantity} images={elem?.images} />
+              return <SpecialProductCard key={elem?._id} id={elem._id} title={elem?.title} rating={elem?.totalrating} brand={elem?.brand} price={elem?.price} quantity={elem?.quantity} images={elem?.images} />
             })
           }
         </div>
@@ -200,6 +204,8 @@ const Home = () => {
 
         </div>
       </Container>
+      </>
+      }
 
     </>
   )
