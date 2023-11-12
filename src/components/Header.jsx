@@ -6,7 +6,7 @@ import heart from '../assets/heart-alt-svgrepo-com.svg';
 import user from '../assets/user-alt-1-svgrepo-com.svg';
 import shoppingCart from '../assets/cart-shopping-svgrepo-com.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserCart } from '../features/auth/authSlice';
+import { getUserCart, resetState } from '../features/auth/authSlice';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
 import { slide as Menu } from 'react-burger-menu';
@@ -54,6 +54,7 @@ const Header = () => {
   }, [cartState])
 
   useEffect(() => {
+    
     dispatch(getUserCart());
   }, [])
 
@@ -165,6 +166,14 @@ const Header = () => {
                   <Link onClick={handleItemClick} to="/compare-product">Compare Products</Link>
                   <Link onClick={handleItemClick} to="/wishlist" >Favourite Wishlist</Link>
                   <Link onClick={handleItemClick} to="/cart">Go To Cart</Link>
+                  {(customerInfo === undefined || customerInfo === null) ? '' :
+                    (<button onClick={() => {
+                      setOpen(true);
+                      handleItemClick();
+                    }} className="flex items-center" >
+                      <p className="text-md flex flex-col leading-5" ><span>Logout</span></p>
+                    </button>)
+                  }
                 </Menu>
               </div>
             </div>

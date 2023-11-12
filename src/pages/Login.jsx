@@ -18,7 +18,7 @@ const Login = () => {
   const authState = useSelector((state)=> state.auth);
   const {user, isSuccess, isError, loggedUser} = authState;
   useEffect(()=>{
-    if(user && isSuccess){
+    if(user?.length !== 0 && isSuccess){
     toast.success('User registered Successfully');
     dispatch(resetState());
     }else if(isError){
@@ -27,9 +27,10 @@ const Login = () => {
   },[user])
 
   useEffect(()=>{
-    if(loggedUser && isSuccess){
+    if(loggedUser?.length !== 0 && isSuccess){
       toast.success('Logged In');
-      navigate('../')
+      navigate('../');
+    dispatch(resetState());
     }else if(isError){
       toast.error('Something went wrong');
     }

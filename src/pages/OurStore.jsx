@@ -45,9 +45,8 @@ const OurStore = () => {
     dispatch(getColors())
   }, [])
 
-  const productState = useSelector((state) => state?.product);
+  const products = useSelector((state) => state?.product?.products);
   const colors = useSelector(state => state?.auth?.colors);
-  const { products } = productState;
 
   const fetchMoreData = () => {
     if (products.length < limit) {
@@ -213,7 +212,7 @@ const OurStore = () => {
               </div>
             </div>
             <div className="ourstore-products grid grid-cols-12 py-5 gap-5">
-              {products && products.map((elem) => {
+              {products && products?.map((elem) => {
                 return <ProductCard key={elem?._id} color={elem?.color} id={elem._id} grid={grid} title={elem.title} brand={elem.brand} description={elem.description} price={elem.price} images={elem.images} rating={elem.totalrating} />
               })
               }
