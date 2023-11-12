@@ -25,7 +25,6 @@ const Home = () => {
   const blogs = useSelector((state) => state?.blog?.blogs);
   const productState = useSelector((state) => state?.product);
   const {products, isLoading} = productState;
-  console.log(products);
 
   return (
     <>

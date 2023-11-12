@@ -124,17 +124,10 @@ const Header = () => {
 
                 </div>
                 <div>
-                  {
-                    (customerInfo === null || customerInfo === undefined) ?
-                      (<Link to="/login" className="flex items-center gap-2" >
-                        <img src={user} alt="user icon" className="h-8" />
-                        <p className="text-white text-md flex flex-col leading-5" ><span>Login</span><span>My Account</span></p>
-                      </Link>) :
-                      (<button onClick={() => setOpen(true)} className="flex items-center gap-2" >
-                        <img src={user} alt="user icon" className="h-8" />
-                        <p className="text-white text-md flex flex-col leading-5" ><span>Logout</span><span>{customerInfo?.firstname !== undefined && customerInfo?.firstname}</span></p>
-                      </button>)
-                  }
+                  <Link to="/login" className="flex items-center gap-1" >
+                    <img src={user} alt="user icon" className="h-8" />
+                    <p className="text-white text-md flex flex-col leading-5" ><span>{customerInfo === undefined || customerInfo === null ? "Login" : ''}</span><span>{customerInfo?.firstname !== undefined ? customerInfo?.firstname : 'My Account'}</span></p>
+                  </Link>
 
                 </div>
                 <div>
@@ -149,17 +142,11 @@ const Header = () => {
             </div>
             <div className="hamburger-menu hidden">
               <div className="flex items-center gap-9">
-                {
-                  (customerInfo === null || customerInfo === undefined) ?
-                    (<Link to="/login" className="flex items-center gap-1" >
-                      <img src={user} alt="user icon" className="h-8" />
-                      <p className="text-white text-md flex flex-col leading-5" ><span>Login</span><span>My Account</span></p>
-                    </Link>) :
-                    (<button onClick={() => setOpen(true)} className="flex items-center gap-1" >
-                      <img src={user} alt="user icon" className="h-8" />
-                      <p className="text-white text-md flex flex-col leading-5" ><span>Logout</span><span>{customerInfo?.firstname !== undefined && customerInfo?.firstname}</span></p>
-                    </button>)
-                }
+
+                <Link to="/login" className="flex items-center gap-1" >
+                  <img src={user} alt="user icon" className="h-8" />
+                  <p className="text-white text-md flex flex-col leading-5" ><span>Login</span><span>{customerInfo?.firstname !== undefined ? customerInfo?.firstname : 'My Account'}</span></p>
+                </Link>
                 <Menu isOpen={isOpen} onStateChange={(state) => setIsOpen(state.isOpen)} right>
                   <Typeahead
                     id="basic-behaviors-example"
@@ -200,6 +187,13 @@ const Header = () => {
             <NavLink to="/product">our Store</NavLink>
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/contact">Contact</NavLink>
+            {(customerInfo === undefined || customerInfo === null) ? '' :
+              <button onClick={() => setOpen(true)} className="flex items-center" >
+                <p className="text-white text-md flex flex-col leading-5" ><span>Logout</span></p>
+              </button>
+
+            }
+
           </div>
         </header>
       </div>
