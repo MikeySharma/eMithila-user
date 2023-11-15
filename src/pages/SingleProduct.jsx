@@ -3,6 +3,7 @@ import Meta from '../components/Meta'
 import BreadCrumb from '../components/BreadCrumb'
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import { SideBySideMagnifier } from "react-image-magnifiers";
 import Magnifier from "react-magnifier";
 import Color from '../components/Color';
 import ReactStars from "react-rating-stars-component";
@@ -11,6 +12,8 @@ import wishlistIcon from '../assets/black-heart.svg';
 import Container from '../components/Container';
 import { copyToClipboard } from '../components/Data';
 import { useDispatch, useSelector } from 'react-redux';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useLocation } from 'react-router-dom';
 import { getAProduct, addToWishList, rating, getProducts, addToCompare } from '../features/products/productSlice';
 import parse from 'html-react-parser';
@@ -38,6 +41,30 @@ const SingleProduct = () => {
     const getProductState = useSelector((state) => state?.product?.getProduct);
     const { title, brand, category, color, images, price, quantity, totalrating, description, tags, ratings } = getProductState;
     const products = useSelector((state) => state?.product?.products);
+
+    const renderCustomThumbs = () => {
+        return images && images?.map((elem, index) => {
+
+            return [
+                <picture key={index}>
+                    <source
+                        data-srcset={elem?.url}
+                        type="image/jpg"
+                    />
+                    <img
+                        key={index}
+                        src={elem?.url}
+                        alt=" Thumbnail"
+                        height="70"
+                    />
+                </picture>,
+            ];
+        })
+
+    };
+
+
+
 
     const rateSchema = yup.object({
         rating: yup.number().required('Rate the product'),
@@ -76,25 +103,57 @@ const SingleProduct = () => {
             <Container class1="single-product py-5 set-bg">
                 <section className="main-product pb-5">
                     <div className=" grid grid-cols-12 gap-4 rounded-md  p-4">
-                        <div className="main-product-images bg-white col-span-6">
-                            <div className="main-image border-2 overflow-hidden p-1 border-gray-300 rounded-md  ">
+                        <div style={{ height: 'fit-content' }} className="main-product-images   col-span-6">
+                            <div style={{ height: 'fit-content' }} className="main-image border-2 p-1 border-gray-300 rounded-md  ">
                                 <div >
-                                    {
-                                        <Magnifier className="flex items-center justify-center" src={images && images[0]?.url} height={"23.2rem"} width={"full"} />
-                                    }
+                                    <Carousel
+                                        showArrows={false}
+                                        showStatus={true}
+                                        showIndicators={false}
+                                        showThumbs={true}
+                                        autoPlay={false}
+                                        transitionTime={500}
+                                        swipeable={false}
+                                        emulateTouch={true}
+                                        renderThumbs={renderCustomThumbs}
+                                    >
+                                        {images && images?.map((elem, index) => {
+                                            return <div key={index}>
+                                                <SideBySideMagnifier
+                                                    imageSrc={elem?.url}
+                                                    imageAlt="Slide"
+                                                    alwaysInPlace={false}
+                                                    fillAvailableSpace={true}
+                                                    fillAlignTop={true}
+                                                    fillGapRight={10}
+                                                    fillGapBottom={10}
+                                                    fillGapTop={10}
+                                                    fillGapLeft={0}
+                                                />
+                                            </div>
+                                        })}
+
+
+                                    </Carousel>
                                 </div>
 
                             </div>
-                            <div className="other-images  flex flex-wrap justify-between gap-2 mt-2">
-                                <div className=" other-image rounded-md w-fit  cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
-                                </div>
-                                <div className=" other-image rounded-md w-fit cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
-                                </div>
-                                <div className=" other-image rounded-md w-fit cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
-                                </div>
-                                <div className=" other-image rounded-md w-fit cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
+                            <div className="w-full">
+                                <h3 className="text-2xl font-medium py-5">Description</h3>
+                                <div className="desc-holder  bg-white box-shadow-dim p-3 rounded-md">
+                                    <div className="desc text-md font-normal">{description && parse(description)}</div>
                                 </div>
                             </div>
+                            {/* <div className="other-images  flex flex-wrap justify-between gap-2 mt-2">
+                            <div className=" other-image rounded-md w-fit  cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
+                            </div>
+                            <div className=" other-image rounded-md w-fit cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
+                            </div>
+                            <div className=" other-image rounded-md w-fit cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
+                            </div>
+                            <div className=" other-image rounded-md w-fit cursor-pointer border-2 border-gray-200 p-1"><img src={images && images[1]?.url} alt="watch image" />
+                            </div>
+                        </div> */}
                         </div>
                         <div className="product-detail col-span-6">
                             <div className="bg-white border-2 border-gray-200 p-2 rounded-md">
@@ -191,14 +250,14 @@ const SingleProduct = () => {
                         </div>
                     </div>
                 </section>
-                <section className="single-product-desc">
+                {/* <section className="single-product-desc">
                     <div className="container mx-auto">
                         <h3 className="text-2xl font-medium py-5">Description</h3>
                         <div className="desc-holder  bg-white box-shadow-dim p-3 rounded-md">
                             <div className="desc text-md font-normal">{description && parse(description)}</div>
                         </div>
                     </div>
-                </section>
+                </section> */}
                 <section className="product-review py-5">
                     <div className="container mx-auto">
                         <h3 className=" text-2xl font-medium mb-2">Reviews</h3>

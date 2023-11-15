@@ -19,9 +19,8 @@ const ProductCard = (props) => {
         <div className={`col-span-${location.pathname === '/product' ? `${grid}` : '2'} box-shadow-dim rounded-md overflow-hidden bg-white`}>
             <div className="product-item relative">
                 <div className="product-img flex items-center justify-center h-36 overflow-hidden">
-                    {images && images.map((elem) => <img className=" w-full" key={elem.public_id} src={elem.url} alt="product-image" />)
-                    }
-
+                   <img className=" w-full" key={images[0].public_id} src={images[0].url} alt="product-image" />
+                   <img className=" w-full" key={images[1].public_id} src={images[1].url} alt="product-image" />
                 </div>
 
                 <div className="product-details p-2">

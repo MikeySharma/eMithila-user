@@ -70,7 +70,7 @@ const OurStore = () => {
       <BreadCrumb title="Our Store" />
       <Container class1="store-wrapper py-5">
         <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-3">
+          <div className="col-span-3 our-store-filter">
             <div className="filter-card bg-white rounded-md box-shadow-dim mb-4 p-3">
               <h5 className="filter-title text-xl font-medium mb-4" >Shop By Categories</h5>
               <ul>
@@ -211,7 +211,7 @@ const OurStore = () => {
                 </div>
               </div>
             </div>
-            <div className="ourstore-products grid grid-cols-12 py-5 gap-5">
+            <div className="ourstore-products grid grid-cols-12 py-2 gap-2">
               {products && products?.map((elem) => {
                 return <ProductCard key={elem?._id} color={elem?.color} id={elem._id} grid={grid} title={elem.title} brand={elem.brand} description={elem.description} price={elem.price} images={elem.images} rating={elem.totalrating} />
               })

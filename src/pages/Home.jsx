@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <>
       <Meta title="Home" />
-      {isLoading && <div className="text-center py-5 text-xl font-medium">Please Wait...</div>}
+      {isLoading && <div style={{height: '90vh'}} className="text-center py-5 text-xl font-medium flex items-center justify-center">Please Wait...</div>}
       {!isLoading && 
       <>
       <Container class1="home-wrapper-1 py-2">
@@ -45,15 +45,17 @@ const Home = () => {
               ))}
             </Slide>
           </div>
-          <div className=" small-banners col-span-6 flex flex-wrap gap-2 justify-around items-center">
+          <div className=" small-banners col-span-6 grid grid-cols-2 gap-2 ">
             {products && products?.filter((elem) => elem?.tags === 'special')?.slice(0, 4)?.map((elem) => {
-              return (<div key={elem?._id} className="small-banner relative rounded-md overflow-hidden">
-                <img src={elem?.images[0]?.url} className='w-72 h-48 ' alt="small-banner" />
+              return (<div key={elem?._id} className="small-banner col-span-1 relative rounded-md overflow-hidden">
+                <img src={elem?.images[0]?.url} className='w-full h-48 ' alt="small-banner" />
+                <Link to={`product/${elem?._id}`}>
                 <div className="small-banner-content absolute">
-                  <h4 className="text-xl mb-3">{elem?.brand}</h4>
-                  <h5 className='text-2xl uppercase transform-none'>{elem?.title?.substring(0, 20) + '...'}</h5>
-                  <p className='text-md text-dark-700'>from ${elem?.price + 20} <br /> or ${elem?.price - 20}</p>
+                  <h4 className="text-md bg-gray-100 rounded-md w-fit px-2 mb-3 ">{elem?.brand}</h4>
+                  <h5 className='text-xl text-gray-100 rounded-md w-fit uppercase transform-none'>{elem?.title?.substring(0, 20) + '...'}</h5>
+                  <p className='text-md text-gray-100 rounded-md w-fit'>from ${elem?.price + 20}  or ${elem?.price - 20}</p>
                 </div>
+                </Link>
 
               </div>)
             })}
@@ -185,14 +187,14 @@ const Home = () => {
         </div>
       </Container>
 
-      <Container class1="special-product-card-wrapper py-5">
+      {/* <Container class1="special-product-card-wrapper py-5">
         <div className="grid grid-cols-12 gap-2">
           {products && products?.slice(3, 7)?.map((elem) => {
             return <FeatureProductCard key={elem._id} title={elem.title} images={elem.images} brand={elem.brand} description={elem.description} />
           })
           }
         </div>
-      </Container>
+      </Container> */}
 
       <Container class1="blog-wrapper py-5">
         <h4 className=" bg-white mb-5 text-2xl font-medium p-5 box-shadow-dim">Our Latest Blogs</h4>

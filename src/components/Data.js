@@ -15,7 +15,7 @@ export const spanStyle = {
 export const divStyle = {
     position: "relative",
     backgroundSize: 'cover',
-    height: '400px',
+    height: '420px',
     width: 'inherit'
   }
  export const slideImages = [

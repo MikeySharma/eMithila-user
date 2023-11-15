@@ -9,7 +9,7 @@ const SpecialProductCard = (props) => {
             <div className="flex justify-between h-full gap-4">
                 <div className="special-product-img  h-full w-full">
                 {images && images?.slice(0,2)?.map((elem)=>{
-                   return  <img key={elem.public_id} className="h-1/2 rounded-md" src={elem.url} alt="special product img" />
+                   return  <img key={elem.public_id} className="h-36 w-full rounded-md" src={elem.url} alt="special product img" />
 
                 })
                 }

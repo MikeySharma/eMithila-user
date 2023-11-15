@@ -554,6 +554,27 @@ color: var(--color-232f3e);
 .single-product .product-detail .product-quantity:focus{
     outline: none;
 }
+
+.single-product .slide img{
+    height: 90vh !important;
+}
+.single-product .slide div:first-child div:first-child{
+    cursor: pointer !important;
+
+}
+.single-product .carousel-root{
+    position:relative;
+}
+.single-product .carousel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+}
+.single-product .thumb img{
+    height: 12vh !important;
+}
 /*Single Product Ends Here*/
 /*Cart wrapper */
 .cart-wrapper .cart-header h4{
@@ -654,8 +675,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 */
 .bm-menu-wrap {
   position: fixed;
-  top: 47px;
-
+  top: 0px;
   height: 100%;
 }
 

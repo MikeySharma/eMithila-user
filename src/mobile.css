@@ -41,6 +41,9 @@
     .small-banners .small-banner img{
         width: 100%;
     }
+    .small-banners .small-banner-content h5{
+        font-size: 1.3em !important;
+    }
     .home-wrapper-2{
         padding-bottom: 5px !important;
     }
@@ -184,7 +187,7 @@
         display: block;
     }
     /* our store*/
-    .store-wrapper .col-span-3:first-child{
+    .store-wrapper .our-store-filter{
         display: none;
     }
     .store-wrapper .grid .our-store-res{
@@ -226,6 +229,9 @@
     }
     .single-product .similar-products .products div{
         grid-column: span 6 / span 6;
+    }
+    .single-product .slide img{
+        height: 40vh !important;
     }
     /*single product page neds here*/
     /* blog page */
