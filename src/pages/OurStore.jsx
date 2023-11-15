@@ -49,7 +49,7 @@ const OurStore = () => {
   const colors = useSelector(state => state?.auth?.colors);
 
   const fetchMoreData = () => {
-    if (products.length < limit) {
+    if (products?.length < limit) {
       setHasMore(false);
 
     } else {
@@ -57,11 +57,13 @@ const OurStore = () => {
       setPage(page + 1)
       dispatch(getProducts({ limit, page: page + 1 }));
     }
+    window.scrollTo(0,0);
   }
   const fetchLessData = () => {
-    setPage(page - 1)
+    setPage(page - 1);
+    setHasMore(true);
     dispatch(getProducts({ limit, page: page - 1 }));
-
+    window.scrollTo(0,0);
   }
 
   return (

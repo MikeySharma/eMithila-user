@@ -199,7 +199,7 @@ const Home = () => {
       <Container class1="blog-wrapper py-5">
         <h4 className=" bg-white mb-5 text-2xl font-medium p-5 box-shadow-dim">Our Latest Blogs</h4>
         <div className="blog-wrapper grid grid-cols-12 gap-2 ">
-          {blogs && blogs.slice(0, 4).map((elem) => {
+          {blogs && blogs?.slice(0, 4).map((elem) => {
             return <BlogCard key={elem._id} id={elem._id} title={elem.title} desc={elem.description} date={elem.createdAt} img={elem.images} />
           })}
 

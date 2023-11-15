@@ -21,6 +21,7 @@ const Header = () => {
   const [paginate, setPaginate] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
+
   const hideModal = () => {
     setOpen(false);
   };
@@ -36,12 +37,23 @@ const Header = () => {
   const cartState = useSelector((state) => state?.auth?.cart);
   const [customerInfo, setCustomerInfo] = useState();
   useEffect(() => {
-    if (localStorage.getItem('customer')) {
-      setCustomerInfo(JSON.parse(localStorage.getItem('customer')));
+    if (localStorage?.getItem('customer')) {
+      setCustomerInfo(JSON?.parse(localStorage?.getItem('customer')));
     } else {
       setCustomerInfo(null);
     }
   }, [products])
+
+  useEffect(()=>{
+    window.addEventListener('scroll', ()=>{
+      const scrollNavbar = document.querySelector('.scroll-navbar');
+      if(window.scrollY >= 100){
+        scrollNavbar.classList.add('fixed');
+      }else if(window.scrollY <= 100){
+        scrollNavbar.classList.remove('fixed');
+      }
+    });
+  })
 
   useEffect(() => {
     if (cartState !== undefined) {
@@ -54,7 +66,6 @@ const Header = () => {
   }, [cartState])
 
   useEffect(() => {
-    
     dispatch(getUserCart());
   }, [])
 
@@ -72,6 +83,7 @@ const Header = () => {
   }
   return (
     <>
+    <div className="scroll-navbar top-0 w-full z-50">
       <div className="container mx-auto">
         <header className="header-top-strip py-1 px-2">
           <div className="flex items-center justify-between">
@@ -127,7 +139,7 @@ const Header = () => {
                 <div>
                   <Link to="/login" className="flex items-center gap-1" >
                     <img src={user} alt="user icon" className="h-8" />
-                    <p className="text-white text-md flex flex-col leading-5" ><span>{customerInfo === undefined || customerInfo === null ? "Login" : ''}</span><span>{customerInfo?.firstname !== undefined ? customerInfo?.firstname : 'My Account'}</span></p>
+                    <p className="text-white text-md flex flex-col leading-5" ><span>{customerInfo === undefined || customerInfo === null ? "Login" : ''}</span><span>{customerInfo?.firstname !== undefined ? customerInfo?.firstname : ''}</span></p>
                   </Link>
 
                 </div>
@@ -205,6 +217,7 @@ const Header = () => {
 
           </div>
         </header>
+      </div>
       </div>
       <CustomModal open={open} performAction={performAction} hideModal={hideModal} title={"Do you really want to Logout Your Account"} />
 

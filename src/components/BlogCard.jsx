@@ -13,7 +13,7 @@ const BlogCard = (props) => {
           <div className="blog-content p-2 mb-8">
             <p className="date text-sm uppercase font-normal p-0">{date? new Date(date).toLocaleDateString() : ''}</p>
             <h5 className="title text-xl font-bold mb-2">{title && title?.length >=40 ? title?.substring(0, 40) + '...' : title }</h5>
-            <div className="card-text text-md font-normal mb-3">{desc ? parse(desc) : ''}</div>
+            <div className="card-text text-md font-normal mb-3">{desc ? desc?.length >=70 ? parse(desc?.substring(0, 70) + '...') : desc : ''}</div>
            
             <Link to={location.pathname === "/blog" ? `${id}` : `blog/${id}`} className="bg-slate-800 absolute bottom-2 left-2 text-white font-medium py-2 px-3 rounded-full hover:bg-orange-500 dark:hover:bg-orange-600">Read More</Link>
           </div>
